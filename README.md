@@ -22,6 +22,7 @@ The installer is [one short script](install.sh). It isn't notarized by Apple, wh
 - Select one or more audio files, right-click → **Convert to** → pick a format.
 - The converted file is saved next to the original (existing files are never overwritten).
 - Formats the file already has are greyed out.
+- **Whole folders:** right-click a folder → **Convert Folder to** → pick a format. iConvert makes a copy named `Album 1 (WAV)` next to it, converts every audio file inside (including subfolders) and copies everything else (cover images etc.) unchanged. The original folder is never touched.
 
 | Format | Quality | Cover art kept |
 |---|---|---|

@@ -10,6 +10,13 @@ mkdir -p $APP/Contents/MacOS $APP/Contents/Resources $EXT/Contents/MacOS
 cp App/Info.plist $APP/Contents/Info.plist
 cp Ext/Info.plist $EXT/Contents/Info.plist
 
+# Release builds stamp the version from the git tag: VERSION=1.2.3 ./build.sh
+if [[ -n $VERSION ]]; then
+  for plist in $APP/Contents/Info.plist $EXT/Contents/Info.plist; do
+    /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $VERSION" -c "Set :CFBundleVersion $VERSION" $plist
+  done
+fi
+
 swift tools/icon.swift build/AppIcon.iconset
 iconutil -c icns build/AppIcon.iconset -o $APP/Contents/Resources/AppIcon.icns
 

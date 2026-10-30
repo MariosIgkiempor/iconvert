@@ -6,6 +6,7 @@ struct SettingsView: View {
     @AppStorage("showMenuBar") private var showMenuBar = true
     @AppStorage("notify") private var notifyDone = true
     @AppStorage("ffmpegPath") private var ffmpegPath = ""
+    @ObservedObject private var updater = Updater.shared
     @State private var launchAtLogin = SMAppService.mainApp.status == .enabled
 
     private var loginBinding: Binding<Bool> {
@@ -20,6 +21,18 @@ struct SettingsView: View {
     var body: some View {
         let ffmpeg = findFFmpeg()
         Form {
+            Section {
+                if let version = updater.available {
+                    LabeledContent("Version \(version) is available") {
+                        Button(updater.updating ? "Updating…" : "Download & Install") { updater.install() }
+                            .disabled(updater.updating)
+                    }
+                } else {
+                    LabeledContent("iConvert \(Updater.current) · \(updater.checking ? "Checking…" : "Up to date")") {
+                        Button("Check Now") { updater.check() }.disabled(updater.checking)
+                    }
+                }
+            }
             Section {
                 Toggle("Launch at login", isOn: loginBinding)
                 Toggle("Show in Dock", isOn: $showDock).disabled(showDock && !showMenuBar)

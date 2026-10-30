@@ -9,7 +9,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      - run: ./build.sh
+      - run: VERSION="${GITHUB_REF_NAME#v}" ./build.sh
       - run: ditto -c -k --keepParent build/iConvert.app iConvert.zip
       - run: gh release create "$GITHUB_REF_NAME" iConvert.zip install.sh uninstall.sh --generate-notes
         env:

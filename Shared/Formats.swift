@@ -17,6 +17,15 @@ enum Format: String, CaseIterable {
         }
     }
 
+    /// Short name used in converted folder names, e.g. "Album (WAV)".
+    var label: String {
+        switch self {
+        case .aac: return "AAC"
+        case .alac: return "ALAC"
+        default: return title
+        }
+    }
+
     var ext: String {
         switch self {
         case .aac, .alac: return "m4a"
